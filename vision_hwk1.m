@@ -9,7 +9,7 @@ clear variables;close all;clc;
 
 % Display a menu and get a choice
 choice = menu('Choose an option', 'Exit Program', 'Load Image', ...
-    'Display Image', 'Mean Filter', 'Gauss Filter');  % as you develop functions, add buttons for them here
+    'Display Image', 'Mean Filter', 'Gauss Filter', 'Frosty Filter');  % as you develop functions, add buttons for them here
  
 % Choice 1 is to exit the program
 while choice ~= 1
@@ -18,7 +18,7 @@ while choice ~= 1
            disp('Error - please choose one of the options.')
            % Display a menu and get a choice
            choice = menu('Choose an option', 'Exit Program', 'Load Image', ...
-    'Display Image', 'Mean Filter', 'Gauss Filter');  % as you develop functions, add buttons for them here
+    'Display Image', 'Mean Filter', 'Gauss Filter', 'Frosty Filter');  % as you develop functions, add buttons for them here
         case 2
            % Load an image
            image_choice = menu('Choose an image', 'lena1', 'mandril1', 'sully', 'yoda', 'shrek');
@@ -85,10 +85,35 @@ while choice ~= 1
 
            % 4. Save the newImage to a file
            imwrite(newImage, 'Gauss-Filter.jpg');
+
+       case 6
+           % Frosty Filter
+
+           % 1. Ask the user for n and m
+           ip = inputdlg('Enter the number of rows of the window(N)');
+           n = str2double(ip{:});
+           ip = inputdlg('Enter the number of columns of the window(M)');
+           m = str2double(ip{:});
+
+
+           % 2. Call the appropriate function
+           newImage = frostyFilter(current_img, n, m);
+
+           % 3. Display the old and the new image using subplot
+           % ....
+           figure
+           subplot(1, 2, 1)
+           imagesc(current_img)
+
+           subplot(1, 2, 2)
+           imagesc(newImage)
+
+           % 4. Save the newImage to a file
+           imwrite(newImage, 'Frosty-Filter.jpg');
            
        %....
    end
    % Display menu again and get user's choice
    choice = menu('Choose an option', 'Exit Program', 'Load Image', ...
-    'Display Image', 'Mean Filter', 'Gauss Filter');  % as you develop functions, add buttons for them here
+    'Display Image', 'Mean Filter', 'Gauss Filter', 'Frosty Filter');  % as you develop functions, add buttons for them here
 end
