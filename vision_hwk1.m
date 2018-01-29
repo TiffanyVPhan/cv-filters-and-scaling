@@ -9,7 +9,7 @@ clear variables;close all;clc;
 
 % Display a menu and get a choice
 choice = menu('Choose an option', 'Exit Program', 'Load Image', ...
-    'Display Image', 'Mean Filter', 'Gauss Filter', 'Frosty Filter', 'Scale Nearest', 'Scale Bilinear');  % as you develop functions, add buttons for them here
+    'Display Image', 'Mean Filter', 'Gauss Filter', 'Frosty Filter', 'Scale Nearest', 'Scale Bilinear', 'Swirl Filter', 'Famous Me');  % as you develop functions, add buttons for them here
  
 % Choice 1 is to exit the program
 while choice ~= 1
@@ -18,7 +18,7 @@ while choice ~= 1
            disp('Error - please choose one of the options.')
            % Display a menu and get a choice
            choice = menu('Choose an option', 'Exit Program', 'Load Image', ...
-    'Display Image', 'Mean Filter', 'Gauss Filter', 'Frosty Filter', 'Scale Nearest', 'Scale Bilinear');  % as you develop functions, add buttons for them here
+    'Display Image', 'Mean Filter', 'Gauss Filter', 'Frosty Filter', 'Scale Nearest', 'Scale Bilinear', 'Swirl Filter', 'Famous Me');  % as you develop functions, add buttons for them here
         case 2
            % Load an image
            image_choice = menu('Choose an image', 'lena1', 'mandril1', 'sully', 'yoda', 'shrek');
@@ -60,6 +60,7 @@ while choice ~= 1
 
            subplot(1, 2, 2)
            imagesc(newImage)
+           title('Mean filter');
 
            % 4. Save the newImage to a file
            imwrite(newImage, 'Mean-Filter.jpg');
@@ -82,6 +83,7 @@ while choice ~= 1
 
            subplot(1, 2, 2)
            imagesc(newImage)
+           title('Gaussian Blur filter');
 
            % 4. Save the newImage to a file
            imwrite(newImage, 'Gauss-Filter.jpg');
@@ -107,6 +109,7 @@ while choice ~= 1
 
            subplot(1, 2, 2)
            imagesc(newImage)
+           title('Frosty filter');
 
            % 4. Save the newImage to a file
            imwrite(newImage, 'Frosty-Filter.jpg');
@@ -126,9 +129,11 @@ while choice ~= 1
            figure
            subplot(1, 2, 1)
            imagesc(current_img)
+           title('Original Image');
 
            subplot(1, 2, 2)
            imagesc(newImage)
+           title('NN Scaled Image');
 
            % 4. Save the newImage to a file
            imwrite(newImage, 'Scale-Nearest.jpg');
@@ -151,13 +156,93 @@ while choice ~= 1
 
            subplot(1, 2, 2)
            imagesc(newImage)
+           title('Bilinear Scaled Image');
 
            % 4. Save the newImage to a file
            imwrite(newImage, 'Scale-Bilinear.jpg');
+
+       case 9
+           % Swirl Filter
+
+           % 1. Ask the user for factor
+           answer = inputdlg('Factor between 0 and 5 (0 - No swirl, 5 - Full Swirl)');
+           factor = str2double(answer{:});
+
+           s = size(current_img);
+           default = sprintf('%g %g', floor(s(2) / 2), floor(s(1) / 2 ));
+           answer = inputdlg('Coordinates of center of Swirl (separated by space)',...
+                             'Input', 1, {default});
+           coord = str2num(answer{:});
+           ox = coord(1);
+           oy = coord(2);
+
+           % 2. Call the appropriate function
+           newImage = swirlFilter(current_img, factor, ox, oy);
+
+           % 3. Display the old and the new image using subplot
+           % ....
+           figure
+           subplot(1, 2, 1)
+           imagesc(current_img)
+
+           subplot(1, 2, 2)
+           imagesc(newImage)
+           title('Swirl Filter');
+
+           % 4. Save the newImage to a file
+           imwrite(newImage, 'Swirl-Filter.jpg');
+
+       case 10
+           % Famous Me
+
+           % Load an image
+           image_choice = menu('Choose an image of yourself', 'me');
+           switch image_choice
+               case 1
+                   filename = 'me.jpeg';
+               % fill in cases for all the images you plan to use
+           end
+           imageOfMe = imread(filename);
+
+           image_choice = menu('Choose a base image', 'lena1', 'mandril1', 'sully', 'yoda', 'shrek');
+           switch image_choice
+               case 1
+                   filename = 'lena1.jpg';
+               case 2
+                   filename = 'mandril1.jpg';
+               case 3
+                   filename = 'sully.bmp';
+               case 4
+                   filename = 'yoda.bmp';
+               % fill in cases for all the images you plan to use
+           end
+
+           baseImg = imread(filename);
+
+           % 2. Call the appropriate function
+           superImposedImg = famousMe(imageOfMe, baseImg, 250, 200);
+
+           % 3. Display the old and the new image using subplot
+           % ....
+           figure
+           subplot(1, 3, 1)
+           imagesc(imageOfMe)
+           title('Image of you');
+
+           subplot(1, 3, 2)
+           imagesc(baseImg)
+           title('Base Image');
+
+           subplot(1, 3, 3)
+           imagesc(superImposedImg)
+           title('You are Famous!');
+
+           % 4. Save the newImage to a file
+           imwrite(superImposedImg, 'Famous-Me.jpg');
            
        %....
    end
    % Display menu again and get user's choice
    choice = menu('Choose an option', 'Exit Program', 'Load Image', ...
-    'Display Image', 'Mean Filter', 'Gauss Filter', 'Frosty Filter', 'Scale Nearest', 'Scale Bilinear');  % as you develop functions, add buttons for them here
+    'Display Image', 'Mean Filter', 'Gauss Filter', 'Frosty Filter', 'Scale Nearest', 'Scale Bilinear', 'Swirl Filter', 'Famous Me');  % as you develop functions, add buttons for them here
 end
