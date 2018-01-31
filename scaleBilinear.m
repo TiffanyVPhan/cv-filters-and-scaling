@@ -3,7 +3,7 @@ function [outImg] = scaleBilinear(inImg, factor)
         disp('Factor cannot be less than 0');
     end
 
-     paddedImg = padarray(padarray(double(inImg), [0, 1], 'replicate', 'post'), [1, 0], 'replicate', 'post');
+    paddedImg = padarray(padarray(double(inImg), [0, 1], 'replicate', 'post'), [1, 0], 'replicate', 'post');
     
     outImg = zeros(round(factor * size(inImg, 1)), round(factor * size(inImg, 2)), size(inImg ,3));  
     for row = 1:size(outImg, 1)
