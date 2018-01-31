@@ -8,8 +8,8 @@ function [outImg] = scaleBilinear(inImg, factor)
     outImg = zeros(round(factor * size(inImg, 1)), round(factor * size(inImg, 2)), size(inImg ,3));  
     for row = 1:size(outImg, 1)
         for col = 1:size(outImg, 2)
-            topLeftRowIndex = ceil(row/factor);
-            topLeftColIndex = ceil(col/factor);
+            topLeftRowIndex = mapRowColOfOutToInImg(row, factor, size(inImg, 1));
+            topLeftColIndex = mapRowColOfOutToInImg(col, factor, size(inImg, 2));
 
             topLeft = paddedImg(topLeftRowIndex, topLeftColIndex, :);
             topRight = paddedImg(topLeftRowIndex, topLeftColIndex + 1, :);
