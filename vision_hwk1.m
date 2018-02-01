@@ -165,7 +165,7 @@ while choice ~= 1
            % Swirl Filter
 
            % 1. Ask the user for factor
-           answer = inputdlg('Factor between -5 and 5(-5: Full counter clockwise swirl, 0: No swirl, 5: Full Clockwise Swirl)');
+           answer = inputdlg('Factor between -100 and 100. (-100: Full counter clockwise swirl, 100: Full Clockwise Swirl)');
            factor = str2double(answer{:});
 
            s = size(current_img);
