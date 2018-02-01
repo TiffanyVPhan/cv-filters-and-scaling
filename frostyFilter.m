@@ -1,4 +1,8 @@
 function [outImg] = frostyFilter(inImg, n, m)
+    if n < 0 || m < 0
+        disp('Window size cannot be negative')
+        return
+    end
     left_width = ceil((m - 1) / 2);
     right_width = m - 1 - left_width;
     top_width = ceil((n - 1) / 2);

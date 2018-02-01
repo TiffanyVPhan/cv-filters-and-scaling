@@ -1,9 +1,15 @@
 function [outImg] = swirlFilter(inImg, factor, ox, oy)
-    if factor > 5 || factor < 0
-        disp('Factor should be between 0 and 5!');
+    if ox <= 0 || oy <= 0
+        disp('The coordinates of the center cannot be zero or negative!');
         return
     end
-    normFactor = factor / 100;
+    if abs(factor) > 5
+        disp('Factor should be between -5 and 5!');
+        return
+    end
+    % A negative factor should result in a counter-clockwise swirl and vice
+    % versa
+    normFactor = - (factor) / 100;
 
     % Initially the outImg is set to the inImg as not every point in the
     % inImg will map to a point whose coordinates are within outImg(after swirling).
@@ -24,7 +30,7 @@ function [outImg] = swirlFilter(inImg, factor, ox, oy)
             orig_y = cast(r * sin(orig_theta), 'int16');
 
             % convert orig_y, orig_x back to row and col.
-            % -----------------------------------------------
+            % ----------------------------------------------------
             % First and Second Quadrant
             if row <= oy
                 orig_row = - abs(orig_y) + oy;
@@ -34,7 +40,7 @@ function [outImg] = swirlFilter(inImg, factor, ox, oy)
                 orig_row = abs(orig_y) + oy;
                 orig_col = orig_x + ox;
             end
-            % -----------------------------------------------
+            % ----------------------------------------------------
 
              if orig_row > 0 && orig_row <= size(inImg, 1) &&...
                 orig_col > 0 && orig_col <= size(inImg, 2)
