@@ -1,4 +1,9 @@
 function [superImposedImg] = famousMe(imageOfMe, baseImg, padLeft, padTop)
+    if padLeft < 0 || padTop < 0
+        disp('Left and right padding cannot be negative');
+        return;
+    end
+
     imageOfMe = imresize(imageOfMe, [200, 300]);
     baseImg = imresize(baseImg, [512, 512]);
 

@@ -18,6 +18,7 @@ function [outImg] = swirlFilter(inImg, factor, ox, oy)
     % the unmapped pixel(outImg) is in.
     %
     outImg = inImg;
+    % Inverse mapping the output pixel to the input pixel.
     for row = 1:size(outImg, 1)
         for col = 1:size(outImg, 2)
             % convert row, col to x, y with ox, oy as origin.
@@ -25,6 +26,7 @@ function [outImg] = swirlFilter(inImg, factor, ox, oy)
             r = sqrt((curr_x ^ 2) + (curr_y ^ 2));
             curr_theta = atan(curr_y / curr_x) + thetaOffset;
 
+            % Swirled_output_pixel = Input_pixel - (Radius * factor)
             orig_theta = curr_theta - (r * normFactor);
             orig_x = cast(r * cos(orig_theta), 'int16');
             orig_y = cast(r * sin(orig_theta), 'int16');
