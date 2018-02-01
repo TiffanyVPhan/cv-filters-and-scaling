@@ -7,7 +7,9 @@ function [outImg] = scaleNearest(inImg, factor)
 
     for row = 1:size(outImg, 1)
         for col = 1:size(outImg, 2)
-            outImg(row, col, :) = inImg(round(row/factor), round(col/factor), :);
+            in_row = calcNearestNeighborCoordinates(row, factor, size(inImg, 1));
+            in_col = calcNearestNeighborCoordinates(col, factor, size(inImg, 2));
+            outImg(row, col, :) = inImg(in_row, in_col, :);
         end
     end
     outImg = cast(outImg, 'uint8');
